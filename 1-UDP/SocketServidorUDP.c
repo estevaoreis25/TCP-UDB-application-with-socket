@@ -15,10 +15,10 @@ int main(int argc, char *argv[]){
     printf("Digite corretamente ao iniciar o programa: <ip_do_servidor> <porta_do_servidor>\n");
     return -1;  
 	}
-/* Criação do socket UDP */
-// AF_INET = ARPA INTERNET PROTOCOLS -- IPv4
-// SOCK_DGRAM = orientado a datagramas
-// 0 = protocolo padrao para o tipo escolhido -- UDP
+	/* Criação do socket UDP */
+	// AF_INET = ARPA INTERNET PROTOCOLS -- IPv4
+	// SOCK_DGRAM = orientado a datagramas
+	// 0 = protocolo padrao para o tipo escolhido -- UDP
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
     if(sock < 0){
         perror("Houve um problema ao criar o socket:");
@@ -35,7 +35,7 @@ int main(int argc, char *argv[]){
 	addr_servidor.sin_addr.s_addr = inet_addr(argv[1]); // definindo o endereco IP
 	addr_servidor.sin_port = htons(atoi(argv[2])); // definindo a porta que vai ser utilizada para a conexão
 
-	// ligando o socket ao IP e porta
+	// ligando o socket ao endereco IP e porta
     int verifica_associacao = bind(sock, (struct sockaddr *)&addr_servidor, sizeof(addr_servidor));
     if (verifica_associacao < 0){
 		printf("Erro ao associar o nome ao socket na porta:%s\n", argv[2]);
