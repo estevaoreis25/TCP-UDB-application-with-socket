@@ -1,9 +1,3 @@
-/* ******************************/
-/* FGA/Eng. Software/ FRC       */
-/* Prof. Fernando W. Cruz       */
-/* Codigo: tcpClient2.c         */
-/* ******************************/
-
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -31,8 +25,8 @@ int main(int argc,char * argv[]) {
 	memset((char *)&bufout,0,sizeof(bufout));     /* limpa buffer */
 	
 	ladoServ.sin_family      = AF_INET; /* config. socket p. internet*/
-	ladoServ.sin_addr.s_addr = inet_addr(argv[1]);
-	ladoServ.sin_port        = htons(atoi(argv[2]));
+	ladoServ.sin_addr.s_addr = inet_addr(argv[1]); // ip adress
+	ladoServ.sin_port        = htons(atoi(argv[2])); // porta
 
 	/* Cria socket */
 	sd = socket(AF_INET, SOCK_STREAM, 0);
@@ -54,12 +48,12 @@ int main(int argc,char * argv[]) {
 
 		do{
 
-			if ((n = recv(sd, buf_in, 8192, 0)) > 0) {
-	        buf_in[n] = '\0';
+			if ((n = recv(sd, buf_in, 8192, 0)) > 0) { // recebendo dados da função send do servidor
+	        buf_in[n] = '\0'; // define fim da string
 
-	        fprintf(stdout, "Servidor >> %s\n", buf_in);
+	        fprintf(stdout, "Servidor >> %s\n", buf_in); // Printa mensagem recebida do servidor
 	   		}
-   		}while(strcmp (buf_in, "LIBERADO") != 0 );
+   		}while(strcmp (buf_in, "LIBERADO") != 0 ); // Envia dados enquanto for diferente de LIBERADO
    	}
 
 	} /* fim while */
