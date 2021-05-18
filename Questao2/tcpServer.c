@@ -60,7 +60,7 @@ int main(int argc, char *argv[]){
 		}
 
 		fprintf(stdout, "Cliente %s: %u conectado.\n\n", inet_ntoa(endCli.sin_addr), ntohs(endCli.sin_port)); 
-		atende_cliente(novo_sd, endCli); // Função do comportamento do cliente
+		atende_cliente(novo_sd, endCli);
    	} /* fim for */
 		return 0;
 } /* fim do programa */
@@ -68,27 +68,27 @@ int main(int argc, char *argv[]){
 
 		int atende_cliente(int descritor, struct sockaddr_in endCli)  {
 
-			char bufin[MAX_SIZE]; // buffer de dados recebidos
-			char bufout[MAX_SIZE]; // buffer de dados enviados
-			int  n; // número de caracteres lidos do cliente
+			char bufin[MAX_SIZE];
+			char bufout[MAX_SIZE];
+			int  n;
 			while (1) {
 
 				memset(&bufin, 0x0, sizeof(bufin));
-				n = recv(descritor, &bufin, sizeof(bufin),0); // recebendo dados da função send do cliente
-				if (strncmp(bufin, "FIM", 3) == 0) // Verifica se o cliente quer encerrar a conexão
+				n = recv(descritor, &bufin, sizeof(bufin),0);
+				if (strncmp(bufin, "FIM", 3) == 0)
 					break;
-				fprintf(stdout, "Cliente >> %s", bufin); // Mensagens enviadas do cliente para o servidor
-				if(strcmp(bufin, "LIBERADO\n") == 0){ // Se a mensagem que o cliente enviou for igual a LIBERADO,
-					do{			      // agora o servidor pode enviar mensagens para o cliente
+				fprintf(stdout, "Cliente >> %s", bufin);
+				if(strcmp(bufin, "LIBERADO\n") == 0){
+					do{
 					printf("> ");
-					scanf("%s", bufout); // scaneia mensagem que será enviada para o cliente
-					send(descritor, bufout, strlen(bufout), 0); // define fim da string
-					}while(strcmp(bufout, "LIBERADO") != 0); // Envia dados para o cliente
+					scanf("%s", bufout);
+					send(descritor, bufout, strlen(bufout), 0);
+					}while(strcmp(bufout, "LIBERADO") != 0);
 				}
 				
 					
 				
    } /* fim while */
 				fprintf(stdout, "Encerrando conexao com %s:%u ...\n\n", inet_ntoa(endCli.sin_addr), ntohs(endCli.sin_port));
-				close (descritor); // fecha socket
+				close (descritor);
  } /* fim atende_cliente */
